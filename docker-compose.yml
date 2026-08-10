@@ -18,7 +18,7 @@ services:
       - HERMES_DASHBOARD_BASIC_AUTH_USERNAME=${HERMES_DASHBOARD_BASIC_AUTH_USERNAME:-hermes}
       - HERMES_DASHBOARD_BASIC_AUTH_PASSWORD=${HERMES_DASHBOARD_BASIC_AUTH_PASSWORD:-}
     volumes:
-      - /srv/hermes:/opt/data
+      - /srv/hermes:/opt/data:z
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8642/health"]
       interval: 30s
