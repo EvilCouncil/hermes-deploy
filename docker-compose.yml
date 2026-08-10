@@ -5,14 +5,18 @@ services:
     restart: unless-stopped
     command: gateway run
     ports:
-      - "5100:8642"
+      - "5100:8642"   # API server + health
+      - "5101:9119"   # web dashboard (HERMES_DASHBOARD=1)
     environment:
       - HF_TOKEN=${HF_TOKEN:-}
       - HERMES_PORT=8642
+      - HERMES_DASHBOARD=1
       - API_SERVER_ENABLED=true
       - API_SERVER_HOST=0.0.0.0
       - API_SERVER_KEY=${API_SERVER_KEY}
       - API_SERVER_CORS_ORIGINS='*'
+      - HERMES_DASHBOARD_BASIC_AUTH_USERNAME=${HERMES_DASHBOARD_BASIC_AUTH_USERNAME:-hermes}
+      - HERMES_DASHBOARD_BASIC_AUTH_PASSWORD=${HERMES_DASHBOARD_BASIC_AUTH_PASSWORD:-}
     volumes:
       - /srv/hermes:/opt/data
     healthcheck:
