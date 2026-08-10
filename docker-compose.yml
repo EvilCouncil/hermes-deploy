@@ -3,15 +3,20 @@ services:
     image: nousresearch/hermes-agent:v2026.8.3
     container_name: hermes-agent
     restart: unless-stopped
+    command: gateway run
     ports:
-      - "5100:5000"
+      - "5100:8642"
     environment:
       - HF_TOKEN=${HF_TOKEN:-}
-      - HERMES_PORT=5000
+      - HERMES_PORT=8642
+      - API_SERVER_ENABLED=true
+      - API_SERVER_HOST=0.0.0.0
+      - API_SERVER_KEY=${API_SERVER_KEY}
+      - API_SERVER_CORS_ORIGINS='*'
     volumes:
       - /srv/hermes:/opt/data
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8642/health"]
       interval: 30s
       timeout: 10s
       retries: 3
